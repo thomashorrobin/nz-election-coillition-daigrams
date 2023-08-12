@@ -13,18 +13,18 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.tsx</code> and save to reload.
+          Select poll and see potential coallition combinations
         </p>
         <a
           className="App-link"
-          href="https://reactjs.org"
+          href="https://github.com/thomashorrobin/nz-election-coillition-daigrams"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          Source Code
         </a>
+        <FaceSelector selectedChris={selectedChris} setSelectedChris={setSelectedChris} chrises={chrises}/>
       </header>
-      <FaceSelector selectedChris={selectedChris} setSelectedChris={setSelectedChris} chrises={chrises}/>
     </div>
   );
 }
