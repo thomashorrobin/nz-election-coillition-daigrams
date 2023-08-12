@@ -1,8 +1,13 @@
-import React from 'react';
+import React, {useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
+import FaceSelector, {SelectableChris} from './components/FaceSelector';
 
 function App() {
+  const [selectedChris, setSelectedChris] = useState('chris-right');
+  let chrises = Array<SelectableChris>();
+  chrises.push({key: "chris-right", alt: "face of Chris Luxon", image: "chris-right.png"});
+  chrises.push({key: "chris-left", alt: "face of Chris Hipkins", image: "chris-left.png"});
   return (
     <div className="App">
       <header className="App-header">
@@ -19,6 +24,7 @@ function App() {
           Learn React
         </a>
       </header>
+      <FaceSelector selectedChris={selectedChris} setSelectedChris={setSelectedChris} chrises={chrises}/>
     </div>
   );
 }
