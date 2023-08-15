@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
 import FaceSelector, {SelectableChris} from './components/FaceSelector';
+import PollSelector from './components/PollSelector';
 
 function App() {
   const [selectedChris, setSelectedChris] = useState('chris-right');
@@ -25,6 +26,7 @@ function App() {
         </a>
         <FaceSelector selectedChris={selectedChris} setSelectedChris={setSelectedChris} chrises={chrises}/>
       </header>
+      <PollSelector/>
     </div>
   );
 }
