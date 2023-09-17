@@ -4,11 +4,12 @@ import './App.css';
 import FaceSelector, {SelectableChris} from './components/FaceSelector';
 import PollSelector from './components/PollSelector';
 
+let chrises = Array<SelectableChris>();
+chrises.push({key: "chris-right", alt: "face of Chris Luxon", image: "chris-right.png"});
+chrises.push({key: "chris-left", alt: "face of Chris Hipkins", image: "chris-left.png"});
+
 function App() {
   const [selectedChris, setSelectedChris] = useState('chris-right');
-  let chrises = Array<SelectableChris>();
-  chrises.push({key: "chris-right", alt: "face of Chris Luxon", image: "chris-right.png"});
-  chrises.push({key: "chris-left", alt: "face of Chris Hipkins", image: "chris-left.png"});
   return (
     <div className="App">
       <header className="App-header">
