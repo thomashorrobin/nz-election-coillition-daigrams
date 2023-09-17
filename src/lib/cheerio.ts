@@ -56,7 +56,6 @@ async function parsePolling2023PageHTML(html: string): Promise<ScrappedPoll[]> {
             results.set('ACT', parseVoters($(cells[6]).text()));
             results.set('Maori Party', parseVoters($(cells[7]).text()));
             results.set('NZ First', parseVoters($(cells[8]).text()));
-            console.log({ date, company, results });
             scrappedPolls.push({ id: i, date, company, results });
         }
     }
