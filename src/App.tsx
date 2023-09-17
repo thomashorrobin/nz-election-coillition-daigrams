@@ -4,6 +4,7 @@ import './App.css';
 import FaceSelector, {SelectableChris} from './components/FaceSelector';
 import PollSelector from './components/PollSelector';
 import { ScrappedPoll, fetchWikipediaPolls } from './lib/cheerio';
+import SainteLagueResultsTable from './components/SainteLague';
 
 let chrises = Array<SelectableChris>();
 chrises.push({key: "chris-right", alt: "face of Chris Luxon", image: "chris-right.png"});
@@ -12,6 +13,10 @@ chrises.push({key: "chris-left", alt: "face of Chris Hipkins", image: "chris-lef
 function App() {
   const [selectedChris, setSelectedChris] = useState('chris-right');
   const [polls, setPolls] = useState<ScrappedPoll[]>([])
+  const [selectedPoll, setSelectedPoll] = useState<ScrappedPoll | null>(null);
+  const setSelectedPollHandler = (scrappedPoll: ScrappedPoll) => {
+    setSelectedPoll(scrappedPoll);
+  }
   useEffect(() => {
     fetchWikipediaPolls().then(polls => {
         setPolls(polls)
@@ -37,7 +42,8 @@ function App() {
         </a>
         <FaceSelector selectedChris={selectedChris} setSelectedChris={setSelectedChris} chrises={chrises}/>
       </header>
-      <PollSelector polls={polls}/>
+      <PollSelector polls={polls} setSelectedPoll={setSelectedPollHandler} selectedPoll={selectedPoll}/>
+      <SainteLagueResultsTable selectedPoll={selectedPoll}/>
     </div>
   );
 }
