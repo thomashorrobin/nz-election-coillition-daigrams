@@ -9,7 +9,9 @@ function PollSelector(): JSX.Element {
     useEffect(() => {
         fetchWikipediaPolls().then(text => {
             setMarkdown(text)
-        })
+        }).catch(err => {
+            setMarkdown(`<p>${err}</p>`)
+        });
     }, [])
     return (
         <div>
