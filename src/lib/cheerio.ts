@@ -1,5 +1,7 @@
 import { Cheerio, load } from 'cheerio';
 
+const ESTIMATED_VOTERS = 2_919_073 // voters in 2020 election
+
 export type ScrappedPoll = {
     id: number;
     date: string;
@@ -7,7 +9,7 @@ export type ScrappedPoll = {
     results: Map<string, number>;
 }
 
-export async function fetchWikipediaPolls(): Promise<string> {
+export async function fetchWikipediaPolls(): Promise<ScrappedPoll[]> {
     return fetch('https://en.wikipedia.org/w/api.php?action=parse&page=Opinion_polling_for_the_2023_New_Zealand_general_election&format=json&origin=*')
         .then(extractTextFromResponse)
         .then(parsePolling2023PageHTML)
@@ -23,7 +25,11 @@ export async function extractTextFromResponse(res: Response): Promise<string> {
     }
 }
 
-async function parsePolling2023PageHTML(html: string): Promise<string> {
+function parseVoters(publishedPercent: string): number {
+    return Math.floor(parseFloat(publishedPercent) * ESTIMATED_VOTERS);
+}
+
+async function parsePolling2023PageHTML(html: string): Promise<ScrappedPoll[]> {
     const $ = load(html);
     const tables = $('table');
     // console.log('table count', tables.length)
@@ -36,9 +42,27 @@ async function parsePolling2023PageHTML(html: string): Promise<string> {
             biggestTable = tableRef;
         }
     }
+    let scrappedPolls = Array<ScrappedPoll>();
+    // @ts-ignore
+    $(biggestTable).find('tr').each((i, row) => {
+        const cells = $(row).find('td');
+        if (cells.length > 5) {
+            const date = $(cells[0]).text();
+            const company = $(cells[1]).text();
+            const results = new Map<string, number>();
+            results.set('Labour', parseVoters($(cells[3]).text()));
+            results.set('National', parseVoters($(cells[4]).text()));
+            results.set('Greens', parseVoters($(cells[5]).text()));
+            results.set('ACT', parseVoters($(cells[6]).text()));
+            results.set('Maori Party', parseVoters($(cells[7]).text()));
+            results.set('NZ First', parseVoters($(cells[8]).text()));
+            console.log({ date, company, results });
+            scrappedPolls.push({ id: i, date, company, results });
+        }
+    }
+    );
     if (biggestTable) {
-        // @ts-ignore
-        return `<table>${$(biggestTable).html()}</table>` ?? '<p>no data</p>';
+        return scrappedPolls;
     }
     throw new Error('No table found');
 }
