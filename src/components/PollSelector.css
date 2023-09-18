@@ -1,5 +1,5 @@
 .PollSelector {
-    width: 50em;
+    min-width: 27em;
     height: 3em;
     padding: 0 4em 0 1em;
     margin: 3em auto;
