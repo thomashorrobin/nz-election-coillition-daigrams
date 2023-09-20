@@ -20,7 +20,7 @@ export async function extractTextFromResponse(res: Response): Promise<string> {
 }
 
 function parseVoters(publishedPercent: string): number {
-    return Math.floor(parseFloat(publishedPercent) * ESTIMATED_VOTERS);
+    return Math.floor(parseFloat(publishedPercent) * ESTIMATED_VOTERS / 100);
 }
 
 async function parsePolling2023PageHTML(html: string): Promise<ScrappedPoll[]> {

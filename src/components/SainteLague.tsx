@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import './SainteLague.css';
-import { ScrappedPoll } from '../lib/ScrappedPoll';
-import { calculateSeats } from '../lib/sainte-lague';
 
 function parlimentToRows(parliment: Map<string, number>): JSX.Element[] {
     const tableRows = new Array<JSX.Element>();
@@ -11,17 +9,16 @@ function parlimentToRows(parliment: Map<string, number>): JSX.Element[] {
     return tableRows;
 }
 
-function SainteLagueResultsTable(props:{selectedPoll: ScrappedPoll | null, maoriElectorateSeats: number}): JSX.Element {
-    const {selectedPoll, maoriElectorateSeats} = props;
+function SainteLagueResultsTable(props:{parliamentComposition: Map<string, number> | null}): JSX.Element {
+    const {parliamentComposition} = props;
     const [tableRows, setTableRows] = useState<JSX.Element[]>([]);
     useEffect(() => {
-        if (!selectedPoll) {
+        if (!parliamentComposition) {
             return;
         }
-        const parliament = calculateSeats(selectedPoll, maoriElectorateSeats);
-        setTableRows(parlimentToRows(parliament));
-    }, [selectedPoll, maoriElectorateSeats])
-    if (!selectedPoll) {
+        setTableRows(parlimentToRows(parliamentComposition));
+    }, [parliamentComposition])
+    if (!parliamentComposition) {
         return <div></div>
     }
     return (

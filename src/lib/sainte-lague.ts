@@ -5,7 +5,7 @@ import sainteLague from 'sainte-lague';
 
 export function calculateSeats(poll: ScrappedPoll, assumedMaoriSeats: number): Map<string, number> {
     let sainteLagueObject = {};
-    if (poll.reportedPercentage.get("NZ First") ?? 0 < 5) {
+    if ((poll.reportedPercentage.get("NZ First") ?? 0) < 5) {
         poll.results.set("NZ First", 0);
     }
     poll.results.forEach((value, key) => {

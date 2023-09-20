@@ -4,11 +4,14 @@ import PollSelector from './components/PollSelector';
 import { fetchWikipediaPolls } from './lib/cheerio';
 import { ScrappedPoll } from "./lib/ScrappedPoll";
 import SainteLagueResultsTable from './components/SainteLague';
+import VoteBar from './components/VoteBar';
+import { calculateSeats } from './lib/sainte-lague';
 
 function App() {
   const [polls, setPolls] = useState<ScrappedPoll[]>([])
   const [selectedPoll, setSelectedPoll] = useState<ScrappedPoll | null>(null);
   const [maoriElectorateSeats, setMaoriElectorateSeats] = useState<number>(3);
+  const [parliamentComposition, setParliamentComposition] = useState<Map<string, number>|null>(null);
   const setSelectedPollHandler = (scrappedPoll: ScrappedPoll) => {
     setSelectedPoll(scrappedPoll);
   }
@@ -23,6 +26,12 @@ function App() {
         window.close()
     });
 }, [])
+  useEffect(() => {
+    if (!selectedPoll) {
+      return;
+    }
+    setParliamentComposition(calculateSeats(selectedPoll, maoriElectorateSeats));
+  }, [selectedPoll, maoriElectorateSeats]);
   return (
     <div className="App">
       <header className="App-header">
@@ -40,7 +49,8 @@ function App() {
       </header>
       <main>
       <PollSelector polls={polls} maoriElectorateSeats={maoriElectorateSeats} setMaoriElectorateSeats={setMaoriElectorateSeatsHandler} setSelectedPoll={setSelectedPollHandler} selectedPoll={selectedPoll}/>
-      <SainteLagueResultsTable selectedPoll={selectedPoll} maoriElectorateSeats={maoriElectorateSeats}/>
+      <SainteLagueResultsTable parliamentComposition={parliamentComposition}/>
+      <VoteBar results={parliamentComposition ? parliamentComposition : new Map<string, number>()}/>
       </main>
     </div>
   );
