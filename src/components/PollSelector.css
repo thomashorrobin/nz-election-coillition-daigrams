@@ -10,6 +10,18 @@
         "poll-selector maori-seat-selector";
 }
 
+@media screen and (max-width: 600px) {
+    .poll-selector-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        grid-template-areas: 
+            "poll-selector-label"
+            "poll-selector"
+            "maori-electorate-seat-label"
+            "maori-seat-selector";
+    }
+}
+
 #poll-selector {
     width: 90%;
     height: 1.5em;
