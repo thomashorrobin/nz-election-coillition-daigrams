@@ -7,6 +7,7 @@ export type ScrappedPoll = {
     date: string;
     company: string;
     results: Map<string, number>;
+    reportedPercentage: Map<string, number>;
 }
 
 export async function fetchWikipediaPolls(): Promise<ScrappedPoll[]> {
@@ -50,13 +51,23 @@ async function parsePolling2023PageHTML(html: string): Promise<ScrappedPoll[]> {
             const date = $(cells[0]).text();
             const company = $(cells[1]).text();
             const results = new Map<string, number>();
+            const reportedPercentage = new Map<string, number>();
+            
             results.set('Labour', parseVoters($(cells[3]).text()));
             results.set('National', parseVoters($(cells[4]).text()));
             results.set('Greens', parseVoters($(cells[5]).text()));
             results.set('ACT', parseVoters($(cells[6]).text()));
             results.set('Maori Party', parseVoters($(cells[7]).text()));
             results.set('NZ First', parseVoters($(cells[8]).text()));
-            scrappedPolls.push({ id: i, date, company, results });
+
+            reportedPercentage.set('Labour', parseFloat($(cells[3]).text()));
+            reportedPercentage.set('National', parseFloat($(cells[4]).text()));
+            reportedPercentage.set('Greens', parseFloat($(cells[5]).text()));
+            reportedPercentage.set('ACT', parseFloat($(cells[6]).text()));
+            reportedPercentage.set('Maori Party', parseFloat($(cells[7]).text()));
+            reportedPercentage.set('NZ First', parseFloat($(cells[8]).text()));
+
+            scrappedPolls.push({ id: i, date, company, results, reportedPercentage });
         }
     }
     );

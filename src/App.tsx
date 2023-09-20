@@ -49,7 +49,7 @@ function App() {
       </header>
       <main>
       <PollSelector polls={polls} maoriElectorateSeats={maoriElectorateSeats} setMaoriElectorateSeats={setMaoriElectorateSeatsHandler} setSelectedPoll={setSelectedPollHandler} selectedPoll={selectedPoll}/>
-      <SainteLagueResultsTable selectedPoll={selectedPoll}/>
+      <SainteLagueResultsTable selectedPoll={selectedPoll} maoriElectorateSeats={maoriElectorateSeats}/>
       </main>
     </div>
   );

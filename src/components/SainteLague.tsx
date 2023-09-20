@@ -13,13 +13,17 @@ function parlimentToRows(parliment: object): JSX.Element[] {
     return tableRows;
 }
 
-function SainteLagueResultsTable(props:{selectedPoll: ScrappedPoll | null}): JSX.Element {
-    const {selectedPoll} = props;
+function SainteLagueResultsTable(props:{selectedPoll: ScrappedPoll | null, maoriElectorateSeats: number}): JSX.Element {
+    const {selectedPoll, maoriElectorateSeats} = props;
     const [tableRows, setTableRows] = useState<JSX.Element[]>([]);
     useEffect(() => {
         let newObject = {};
         if (!selectedPoll) {
             return;
+        }
+        // @ts-ignore
+        if (selectedPoll.reportedPercentage.get("NZ First") < 5) {
+            selectedPoll.results.set("NZ First", 0);
         }
         selectedPoll.results.forEach((value, key) => {
             // @ts-ignore
@@ -31,8 +35,9 @@ function SainteLagueResultsTable(props:{selectedPoll: ScrappedPoll | null}): JSX
             }
 
             const parliament = sainteLague(newObject, seats, opt)
+            parliament["Maori Party"] = Math.max(parliament["Maori Party"], maoriElectorateSeats);
             setTableRows(parlimentToRows(parliament));
-    }, [selectedPoll])
+    }, [selectedPoll, maoriElectorateSeats])
     if (!selectedPoll) {
         return <div></div>
     }
