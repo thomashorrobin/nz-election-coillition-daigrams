@@ -43,7 +43,9 @@ function VoteBar(props:{results: Map<string, number>, seatsToWin: number}): JSX.
     const totalSeats = addSeats(results);
     return (
         <div className="vote-bar">
-            {voteBarItems}
+            <div className='vote-bar-items'>
+                {voteBarItems}
+            </div>
             <div className={totalSeats < seatsToWin ? "vote-bar-total" : "vote-bar-total-win"}><span>{totalSeats}</span></div>
         </div>
     )
