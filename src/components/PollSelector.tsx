@@ -1,6 +1,6 @@
 import React from 'react';
 import './PollSelector.css';
-import { ScrappedPoll } from '../lib/cheerio';
+import { ScrappedPoll } from '../lib/ScrappedPoll';
 
 function PollSelector(props: {setMaoriElectorateSeats: (value: number) => void, polls: ScrappedPoll[], selectedPoll: ScrappedPoll | null, setSelectedPoll: (scrappedPoll: ScrappedPoll) => void, maoriElectorateSeats: number}): JSX.Element {
     const {polls, selectedPoll, setMaoriElectorateSeats, maoriElectorateSeats} = props;

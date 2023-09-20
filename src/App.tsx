@@ -3,7 +3,8 @@ import React, {useEffect, useState} from 'react';
 import './App.css';
 // import FaceSelector, {SelectableChris} from './components/FaceSelector';
 import PollSelector from './components/PollSelector';
-import { ScrappedPoll, fetchWikipediaPolls } from './lib/cheerio';
+import { fetchWikipediaPolls } from './lib/cheerio';
+import { ScrappedPoll } from "./lib/ScrappedPoll";
 import SainteLagueResultsTable from './components/SainteLague';
 
 // let chrises = Array<SelectableChris>();

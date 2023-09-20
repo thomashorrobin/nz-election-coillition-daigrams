@@ -1,14 +1,7 @@
 import { Cheerio, load } from 'cheerio';
+import { ScrappedPoll } from './ScrappedPoll';
 
 const ESTIMATED_VOTERS = 2_919_073 // voters in 2020 election
-
-export type ScrappedPoll = {
-    id: number;
-    date: string;
-    company: string;
-    results: Map<string, number>;
-    reportedPercentage: Map<string, number>;
-}
 
 export async function fetchWikipediaPolls(): Promise<ScrappedPoll[]> {
     return fetch('https://en.wikipedia.org/w/api.php?action=parse&page=Opinion_polling_for_the_2023_New_Zealand_general_election&format=json&origin=*')
@@ -52,7 +45,7 @@ async function parsePolling2023PageHTML(html: string): Promise<ScrappedPoll[]> {
             const company = $(cells[1]).text();
             const results = new Map<string, number>();
             const reportedPercentage = new Map<string, number>();
-            
+
             results.set('Labour', parseVoters($(cells[3]).text()));
             results.set('National', parseVoters($(cells[4]).text()));
             results.set('Greens', parseVoters($(cells[5]).text()));
