@@ -1,6 +1,49 @@
-.PollSelector {
-    min-width: 27em;
-    height: 3em;
-    padding: 0 4em 0 1em;
-    margin: 3em auto;
+.poll-selector-grid {
+    display: grid;
+    max-width: 30em;
+    margin: 0 auto;
+    padding: 1em auto;
+    grid-template-columns: 14em 16em;
+    grid-template-rows: auto;
+    grid-template-areas: 
+        "poll-selector-label maori-electorate-seat-label" 
+        "poll-selector maori-seat-selector";
+}
+
+#poll-selector {
+    width: 90%;
+    height: 1.5em;
+    border-radius: 0.25em;
+    border: 1px solid #ccc;
+    padding: 0.25em;
+    font-size: 0.5em;
+    /* font-family: 'Roboto', sans-serif; */
+}
+
+#maori-electorate-seat {
+    width: 90%;
+    height: 1.5em;
+    border-radius: 0.25em;
+    border: 1px solid #ccc;
+    padding: 0.25em;
+    font-size: 0.5em;
+}
+
+.poll-selector-label{
+    padding: 10px;
+    text-align: left;
+    grid-area: poll-selector-label;
+}
+.poll-selector-input{
+    padding: 10px;
+    grid-area: poll-selector;
+}
+.maori-electorate-seat-label{
+    padding: 10px;
+    text-align: left;
+    grid-area: maori-electorate-seat-label;
+}
+.maori-electorate-seat-input{
+    padding: 10px;
+    grid-area: maori-seat-selector;
 }
