@@ -4,7 +4,7 @@ import { ScrappedPoll } from '../lib/ScrappedPoll';
 
 function PollSelector(props: {setMaoriElectorateSeats: (value: number) => void, polls: ScrappedPoll[], selectedPoll: ScrappedPoll | null, setSelectedPoll: (scrappedPoll: ScrappedPoll) => void, maoriElectorateSeats: number}): JSX.Element {
     const {polls, selectedPoll, setMaoriElectorateSeats, maoriElectorateSeats} = props;
-    const scrappedPolls = polls.map(scrappedPoll => <option value={scrappedPoll.id} key={scrappedPoll.id}>{scrappedPoll.date} - {scrappedPoll.company}</option>)
+    const scrappedPolls = polls.map(scrappedPoll => <option value={scrappedPoll.id} key={scrappedPoll.id}>{scrappedPoll.company} - {scrappedPoll.date}</option>)
     const handlePollChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const selectedPoll = polls.find(poll => poll.id === parseInt(event.target.value));
         if (selectedPoll) {
