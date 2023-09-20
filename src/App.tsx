@@ -13,7 +13,6 @@ function App() {
     setSelectedPoll(scrappedPoll);
   }
   const setMaoriElectorateSeatsHandler = (value: number) => {
-    console.log(value);
     setMaoriElectorateSeats(value);
   }
   useEffect(() => {
