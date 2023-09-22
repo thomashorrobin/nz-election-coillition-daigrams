@@ -66,9 +66,7 @@ function WinstonKingmaker(props:{seats: number}): JSX.Element {
 
 function VoteBarContainer(props:{results: Map<string, number>}): JSX.Element {
     const {results} = props;
-    console.log(addSeats(results));
     const seatsToWin = calculateSeatsToWin(results);
-    console.log(seatsToWin);
     const rightWingCoilition = new Map<string, number>();
     rightWingCoilition.set('ACT', results.get('ACT') || 0);
     rightWingCoilition.set('National', results.get('National') || 0);
