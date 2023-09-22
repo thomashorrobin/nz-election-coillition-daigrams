@@ -9,7 +9,7 @@ function parlimentToRows(parliment: Map<string, number>): JSX.Element[] {
     return tableRows;
 }
 
-function SainteLagueResultsTable(props:{parliamentComposition: Map<string, number> | null}): JSX.Element {
+function SainteLagueResultsTable(props:{parliamentComposition: Map<string, number>}): JSX.Element {
     const {parliamentComposition} = props;
     const [tableRows, setTableRows] = useState<JSX.Element[]>([]);
     useEffect(() => {

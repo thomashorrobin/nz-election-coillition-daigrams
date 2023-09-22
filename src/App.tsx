@@ -10,8 +10,7 @@ import { calculateSeats } from './lib/sainte-lague';
 function App() {
   const [polls, setPolls] = useState<ScrappedPoll[]>([])
   const [selectedPoll, setSelectedPoll] = useState<ScrappedPoll | null>(null);
-  const [maoriElectorateSeats, setMaoriElectorateSeats] = useState<number>(3);
-  const [parliamentComposition, setParliamentComposition] = useState<Map<string, number>|null>(null);
+  const [assumedMaoriSeats, setMaoriElectorateSeats] = useState<number>(3);
   const setSelectedPollHandler = (scrappedPoll: ScrappedPoll) => {
     setSelectedPoll(scrappedPoll);
   }
@@ -27,12 +26,6 @@ function App() {
         window.close()
     });
 }, [])
-  useEffect(() => {
-    if (!selectedPoll) {
-      return;
-    }
-    setParliamentComposition(calculateSeats(selectedPoll, maoriElectorateSeats));
-  }, [selectedPoll, maoriElectorateSeats]);
   return (
     <div className="App">
       <header className="App-header">
@@ -49,12 +42,22 @@ function App() {
         </a>
       </header>
       <main>
-      <PollSelector polls={polls} maoriElectorateSeats={maoriElectorateSeats} setMaoriElectorateSeats={setMaoriElectorateSeatsHandler} setSelectedPoll={setSelectedPollHandler} selectedPoll={selectedPoll}/>
-      <SainteLagueResultsTable parliamentComposition={parliamentComposition}/>
-      <VoteBar results={parliamentComposition ? parliamentComposition : new Map<string, number>()}/>
+      <PollSelector polls={polls} maoriElectorateSeats={assumedMaoriSeats} setMaoriElectorateSeats={setMaoriElectorateSeatsHandler} setSelectedPoll={setSelectedPollHandler} selectedPoll={selectedPoll}/>
+      {selectedPoll && <SelectedPollDetails selectedPoll={selectedPoll} assumedMaoriSeats={assumedMaoriSeats}/> }
       </main>
     </div>
   );
+}
+
+function SelectedPollDetails(props: {selectedPoll: ScrappedPoll, assumedMaoriSeats: number}): JSX.Element {
+  const {selectedPoll, assumedMaoriSeats} = props;
+  const parliamentComposition = calculateSeats(selectedPoll, assumedMaoriSeats);
+  return (
+    <div>
+      <SainteLagueResultsTable parliamentComposition={parliamentComposition}/>
+      <VoteBar results={parliamentComposition}/>
+    </div>
+  )
 }
 
 export default App;
