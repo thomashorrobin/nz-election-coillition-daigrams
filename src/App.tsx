@@ -41,10 +41,10 @@ function App() {
           Source Code
         </a>
       </header>
-      <main>
+      <div>
       <PollSelector polls={polls} maoriElectorateSeats={assumedMaoriSeats} setMaoriElectorateSeats={setMaoriElectorateSeatsHandler} setSelectedPoll={setSelectedPollHandler} selectedPoll={selectedPoll}/>
       {selectedPoll && <SelectedPollDetails selectedPoll={selectedPoll} assumedMaoriSeats={assumedMaoriSeats}/> }
-      </main>
+      </div>
     </div>
   );
 }
@@ -53,10 +53,10 @@ function SelectedPollDetails(props: {selectedPoll: ScrappedPoll, assumedMaoriSea
   const {selectedPoll, assumedMaoriSeats} = props;
   const parliamentComposition = calculateSeats(selectedPoll, assumedMaoriSeats);
   return (
-    <div>
+    <main>
       <SainteLagueResultsTable parliamentComposition={parliamentComposition} selectedPoll={selectedPoll}/>
       <VoteBar results={parliamentComposition}/>
-    </div>
+    </main>
   )
 }
 
