@@ -21,6 +21,7 @@ function App() {
   useEffect(() => {
     fetchWikipediaPolls().then(polls => {
         setPolls(polls)
+        setSelectedPoll(polls[0])
     }).catch(err => {
         alert(err)
         window.close()
