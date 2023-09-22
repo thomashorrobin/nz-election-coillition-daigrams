@@ -51,6 +51,19 @@ function VoteBar(props:{results: Map<string, number>, seatsToWin: number}): JSX.
     )
 }
 
+function WinstonKingmaker(props:{seats: number}): JSX.Element {
+    const {seats} = props;
+    if (seats > 0) {
+        return (
+            <div className="winston-kingmaker">
+                <img src="winston_heralddd.jpg" alt="NZ First" />
+                <div className='vote-bar-total'><span>{seats}</span></div>
+            </div>
+        )
+    }
+    return <div></div>
+}
+
 function VoteBarContainer(props:{results: Map<string, number>}): JSX.Element {
     const {results} = props;
     console.log(addSeats(results));
@@ -68,6 +81,7 @@ function VoteBarContainer(props:{results: Map<string, number>}): JSX.Element {
     return (
         <div>
             <VoteBar results={rightWingCoilition} seatsToWin={seatsToWin}/>
+            <WinstonKingmaker seats={results.get('NZ First') || 0} />
             <VoteBar results={leftWingCoilition} seatsToWin={seatsToWin}/>
         </div>
     )

@@ -33,6 +33,21 @@
     height: 50px;
 }
 
+.winston-kingmaker {
+    width: 50%;
+    min-width: 350px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 auto;
+}
+
+.winston-kingmaker img {
+    width: 62px;
+    height: 85px;
+}
+
 .vote-bar-item span {
     font-weight: bold;
 }
