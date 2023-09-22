@@ -7,8 +7,10 @@
 .table-center td {
   border: 1px solid black;
   padding: 0.5em;
+  width: 7rem;
 }
 
 .table-center th {
-    width: 14rem;
+    padding-bottom: 0.75em;
+    padding-top: 0.5em;
 }

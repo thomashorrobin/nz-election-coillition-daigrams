@@ -54,7 +54,7 @@ function SelectedPollDetails(props: {selectedPoll: ScrappedPoll, assumedMaoriSea
   const parliamentComposition = calculateSeats(selectedPoll, assumedMaoriSeats);
   return (
     <div>
-      <SainteLagueResultsTable parliamentComposition={parliamentComposition}/>
+      <SainteLagueResultsTable parliamentComposition={parliamentComposition} selectedPoll={selectedPoll}/>
       <VoteBar results={parliamentComposition}/>
     </div>
   )

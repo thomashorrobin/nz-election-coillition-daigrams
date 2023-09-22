@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './SainteLague.css';
+import { ScrappedPoll } from '../lib/ScrappedPoll';
 
 function parlimentToRows(parliment: Map<string, number>): JSX.Element[] {
     const tableRows = new Array<JSX.Element>();
@@ -9,25 +10,15 @@ function parlimentToRows(parliment: Map<string, number>): JSX.Element[] {
     return tableRows;
 }
 
-function SainteLagueResultsTable(props:{parliamentComposition: Map<string, number>}): JSX.Element {
-    const {parliamentComposition} = props;
-    const [tableRows, setTableRows] = useState<JSX.Element[]>([]);
-    useEffect(() => {
-        if (!parliamentComposition) {
-            return;
-        }
-        setTableRows(parlimentToRows(parliamentComposition));
-    }, [parliamentComposition])
-    if (!parliamentComposition) {
-        return <div></div>
-    }
+function SainteLagueResultsTable(props:{parliamentComposition: Map<string, number>, selectedPoll: ScrappedPoll}): JSX.Element {
+    const {parliamentComposition, selectedPoll} = props;
+    const tableRows = parlimentToRows(parliamentComposition);
     return (
         <div>
             <table className='table-center'>
                 <thead>
                     <tr>
-                        <th>Party</th>
-                        <th>Seats</th>
+                        <th colSpan={2}>{selectedPoll.company}<br/><small>{selectedPoll.date}</small></th>
                     </tr>
                 </thead>
                 <tbody>
