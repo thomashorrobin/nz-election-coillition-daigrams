@@ -51,22 +51,34 @@ function VoteBar(props:{results: Map<string, number>, seatsToWin: number}): JSX.
     )
 }
 
-function WinstonKingmaker(props:{seats: number}): JSX.Element {
-    const {seats} = props;
+function WinstonKingmaker(props:{seats: number, winstonKingmaker: boolean}): JSX.Element {
+    const {seats, winstonKingmaker} = props;
     if (seats > 0) {
         return (
             <div className="winston-kingmaker">
                 <img src="logos/nz-first-logo-june-2017.jpg" alt="NZ First" />
-                <div className='vote-bar-total'><span>{seats}</span></div>
+                <div className='vote-bar-total'><span>{seats}</span>{winstonKingmaker && <span className='winston-crown'>👑</span>}</div>
             </div>
         )
     }
     return <div></div>
 }
 
+function isWinstionKingmaker(results: Map<string, number>, seatsToWin: number): boolean {
+    let rightWingSeats = 0;
+    rightWingSeats += results.get('ACT') || 0;
+    rightWingSeats += results.get('National') || 0;
+    let leftWingSeats = 0;
+    leftWingSeats += results.get('Greens') || 0;
+    leftWingSeats += results.get('Labour') || 0;
+    leftWingSeats += results.get('Maori Party') || 0;
+    return (rightWingSeats < seatsToWin && leftWingSeats < seatsToWin);
+}
+
 function VoteBarContainer(props:{results: Map<string, number>}): JSX.Element {
     const {results} = props;
     const seatsToWin = calculateSeatsToWin(results);
+    const winstonKingmaker = isWinstionKingmaker(results, seatsToWin);
     const rightWingCoilition = new Map<string, number>();
     rightWingCoilition.set('ACT', results.get('ACT') || 0);
     rightWingCoilition.set('National', results.get('National') || 0);
@@ -79,7 +91,7 @@ function VoteBarContainer(props:{results: Map<string, number>}): JSX.Element {
     return (
         <div className='vote-bar-container'>
             <VoteBar results={rightWingCoilition} seatsToWin={seatsToWin}/>
-            <WinstonKingmaker seats={results.get('NZ First') || 0} />
+            <WinstonKingmaker seats={results.get('NZ First') || 0} winstonKingmaker={winstonKingmaker}/>
             <VoteBar results={leftWingCoilition} seatsToWin={seatsToWin}/>
         </div>
     )

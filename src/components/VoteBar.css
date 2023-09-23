@@ -52,6 +52,16 @@
     height: 45px;
 }
 
+.winston-kingmaker .vote-bar-total {
+    position: relative;
+}
+
+.winston-crown {
+    position: absolute; 
+    right: -15px;
+    top: -15px;
+}
+
 .vote-bar-item span {
     font-weight: bold;
 }
