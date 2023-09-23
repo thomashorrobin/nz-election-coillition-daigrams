@@ -30,16 +30,23 @@ function App() {
     <div className="App">
       <header className="App-header">
         <p>
-          Select poll and see potential coallition combinations
+          Coalition Combinations
         </p>
-        <a
-          className="App-link"
-          href="https://github.com/thomashorrobin/nz-election-coillition-daigrams"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Source Code
-        </a>
+        <span>
+          <a
+            className="App-link"
+            href="https://github.com/thomashorrobin/nz-election-coillition-daigrams"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            code
+          </a> | <a
+            className="App-link"
+            href="https://en.wikipedia.org/wiki/Opinion_polling_for_the_2023_New_Zealand_general_election#Nationwide_polling"
+            target="_blank"
+            rel="noopener noreferrer"
+          >data</a>
+        </span>
       </header>
       <div>
       <PollSelector polls={polls} maoriElectorateSeats={assumedMaoriSeats} setMaoriElectorateSeats={setMaoriElectorateSeatsHandler} setSelectedPoll={setSelectedPollHandler} selectedPoll={selectedPoll}/>
