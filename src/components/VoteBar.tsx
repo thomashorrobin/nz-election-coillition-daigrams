@@ -56,7 +56,7 @@ function WinstonKingmaker(props:{seats: number}): JSX.Element {
     if (seats > 0) {
         return (
             <div className="winston-kingmaker">
-                <img src="winston_heralddd.jpg" alt="NZ First" />
+                <img src="logos/nz-first-logo-june-2017.jpg" alt="NZ First" />
                 <div className='vote-bar-total'><span>{seats}</span></div>
             </div>
         )
@@ -77,7 +77,7 @@ function VoteBarContainer(props:{results: Map<string, number>}): JSX.Element {
     leftWingCoilition.set('Maori Party', results.get('Maori Party') || 0);
     // leftWingCoilition.set('NZ First', results.get('NZ First') || 0);
     return (
-        <div>
+        <div className='vote-bar-container'>
             <VoteBar results={rightWingCoilition} seatsToWin={seatsToWin}/>
             <WinstonKingmaker seats={results.get('NZ First') || 0} />
             <VoteBar results={leftWingCoilition} seatsToWin={seatsToWin}/>

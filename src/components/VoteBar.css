@@ -10,9 +10,10 @@
     min-width: 350px;
     justify-content: space-between;
     background-color: #f5f5f5;
-    border-right: 1px solid #ccc;
+    border-radius: 1rem;
     align-items: center;
     margin: 0 auto;
+    padding: 0.7rem;
 }
 
 .vote-bar-items {
@@ -41,11 +42,14 @@
     align-items: center;
     justify-content: space-between;
     margin: 0 auto;
+    background-color: #f5f5f5;
+    border-radius: 1rem;
+    padding: 0.7rem;
 }
 
 .winston-kingmaker img {
-    width: 62px;
-    height: 85px;
+    width: 150px;
+    height: 45px;
 }
 
 .vote-bar-item span {
@@ -88,4 +92,13 @@
 .vote-bar-total-win span {
     display:table-cell;
     vertical-align:middle;
+}
+
+.vote-bar-container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem;
 }
