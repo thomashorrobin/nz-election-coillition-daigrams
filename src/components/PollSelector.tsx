@@ -25,7 +25,7 @@ function PollSelector(props: {setMaoriElectorateSeats: (value: number) => void, 
                 {scrappedPolls}
             </select>
             <div className='maori-electorate-seat-layout'>
-                <label htmlFor="maori-electorate-seat">Maori Electorate Seats:</label>
+                <label htmlFor="maori-electorate-seat">Presumed Maori Electorate Seats:</label>
                 <input onChange={handleMaoriElectorateSeatsChange} id='maori-electorate-seat' type="number" min={0} max={7} value={maoriElectorateSeats} />
             </div>
         </div>
