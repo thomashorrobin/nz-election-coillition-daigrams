@@ -20,19 +20,12 @@ function PollSelector(props: {setMaoriElectorateSeats: (value: number) => void, 
         }
     }
     return (
-        <div className='poll-selector-grid'>
-            <div className='poll-selector-label'>
-                <label htmlFor="poll-selector">Select Poll</label>
-            </div>
-            <div className='poll-selector-input'>
-                <select id='poll-selector' onChange={handlePollChange} value={selectedPoll ? selectedPoll.id : 1}>
-                    {scrappedPolls}
-                </select>
-            </div>
-            <div className='maori-electorate-seat-label'>
-                <label htmlFor="maori-electorate-seat">Maori Electorate Seats</label>
-            </div>
-            <div className='maori-electorate-seat-input'>
+        <div className='poll-selector-container'>
+            <select id='poll-selector' onChange={handlePollChange} value={selectedPoll ? selectedPoll.id : 1}>
+                {scrappedPolls}
+            </select>
+            <div className='maori-electorate-seat-layout'>
+                <label htmlFor="maori-electorate-seat">Maori Electorate Seats:</label>
                 <input onChange={handleMaoriElectorateSeatsChange} id='maori-electorate-seat' type="number" min={0} max={7} value={maoriElectorateSeats} />
             </div>
         </div>
