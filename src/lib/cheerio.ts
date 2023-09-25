@@ -41,7 +41,7 @@ async function parsePolling2023PageHTML(html: string): Promise<ScrappedPoll[]> {
     $(biggestTable).find('tr').each((i, row) => {
         const cells = $(row).find('td');
         if (cells.length > 5) {
-            const date = $(cells[0]).text();
+            const pollDateRange = $(cells[0]).text();
             const company = $(cells[1]).text();
             const results = new Map<string, number>();
             const reportedPercentage = new Map<string, number>();
@@ -60,7 +60,7 @@ async function parsePolling2023PageHTML(html: string): Promise<ScrappedPoll[]> {
             reportedPercentage.set('Maori Party', parseFloat($(cells[7]).text()));
             reportedPercentage.set('NZ First', parseFloat($(cells[8]).text()));
 
-            scrappedPolls.push({ id: i, date, company, results, reportedPercentage });
+            scrappedPolls.push({ id: i, date: pollDateRange, company, results, reportedPercentage });
         }
     }
     );
