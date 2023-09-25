@@ -1,5 +1,5 @@
 import { Cheerio, load } from 'cheerio';
-import { ScrappedPoll } from './ScrappedPoll';
+import { ScrappedPoll, generatePollSHA256 } from './ScrappedPoll';
 
 const ESTIMATED_VOTERS = 2_919_073 // voters in 2020 election
 
@@ -38,7 +38,7 @@ async function parsePolling2023PageHTML(html: string): Promise<ScrappedPoll[]> {
     }
     let scrappedPolls = Array<ScrappedPoll>();
     // @ts-ignore
-    $(biggestTable).find('tr').each((i, row) => {
+    for (const row of $(biggestTable).find('tr')) {
         const cells = $(row).find('td');
         if (cells.length > 5) {
             const pollDateRange = $(cells[0]).text();
@@ -60,10 +60,11 @@ async function parsePolling2023PageHTML(html: string): Promise<ScrappedPoll[]> {
             reportedPercentage.set('Maori Party', parseFloat($(cells[7]).text()));
             reportedPercentage.set('NZ First', parseFloat($(cells[8]).text()));
 
-            scrappedPolls.push({ id: i, date: pollDateRange, company, results, reportedPercentage });
+            const hash = await generatePollSHA256(pollDateRange, company);
+
+            scrappedPolls.push({ id: hash, date: pollDateRange, company, results, reportedPercentage });
         }
     }
-    );
     if (biggestTable) {
         return scrappedPolls;
     }

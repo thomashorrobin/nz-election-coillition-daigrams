@@ -2,13 +2,14 @@ import React from 'react';
 import './PollSelector.css';
 import { ScrappedPoll } from '../lib/ScrappedPoll';
 
-function PollSelector(props: {setMaoriElectorateSeats: (value: number) => void, polls: ScrappedPoll[], selectedPoll: ScrappedPoll | null, setSelectedPoll: (scrappedPoll: ScrappedPoll) => void, maoriElectorateSeats: number}): JSX.Element {
+function PollSelector(props: {setMaoriElectorateSeats: (value: number) => void, polls: ScrappedPoll[], selectedPoll: ScrappedPoll, setSelectedPoll: (scrappedPoll: ScrappedPoll) => void, maoriElectorateSeats: number}): JSX.Element {
     const {polls, selectedPoll, setMaoriElectorateSeats, maoriElectorateSeats} = props;
-    const scrappedPolls = polls.map(scrappedPoll => <option value={scrappedPoll.id} key={scrappedPoll.id}>{scrappedPoll.company} - {scrappedPoll.date}</option>)
+    const scrappedPolls = polls.map(scrappedPoll => <option value={scrappedPoll.id.toString()} key={scrappedPoll.id.toString()}>{scrappedPoll.company} - {scrappedPoll.date}</option>)
     const handlePollChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const selectedPoll = polls.find(poll => poll.id === parseInt(event.target.value));
+        const selectedPoll = polls.find(poll => poll.id.toString() == event.target.value);
         if (selectedPoll) {
             props.setSelectedPoll(selectedPoll);
+            console.log(selectedPoll.id.toString());
         } else {
             alert("Poll not found");
         }
@@ -21,7 +22,7 @@ function PollSelector(props: {setMaoriElectorateSeats: (value: number) => void, 
     }
     return (
         <div className='poll-selector-container'>
-            <select id='poll-selector' onChange={handlePollChange} value={selectedPoll ? selectedPoll.id : 1}>
+            <select id='poll-selector' onChange={handlePollChange} value={selectedPoll.id.toString()}>
                 {scrappedPolls}
             </select>
             <div className='maori-electorate-seat-layout'>
