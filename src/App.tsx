@@ -12,7 +12,7 @@ function App() {
   const [error, setError] = useState<string | null>(null)
   useEffect(() => {
     fetchWikipediaPolls().then(polls => {
-        setPolls(polls)
+        setPolls(polls);
     }).catch(err => {
         console.error(err);
         setError(err.message);
