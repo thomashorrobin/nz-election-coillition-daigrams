@@ -6,16 +6,7 @@ import { ScrappedPoll } from "./lib/ScrappedPoll";
 import SainteLagueResultsTable from './components/SainteLague';
 import VoteBar from './components/VoteBar';
 import { calculateSeats } from './lib/sainte-lague';
-
-function getPollIDFromURL(): Uint8Array | null {
-  const searchParams = new URL(window.location.href).searchParams;
-  const pollID = searchParams.get('pollid');
-  if (pollID) {
-    return new Uint8Array(pollID.split(',').map(id => parseInt(id)));
-  } else {
-    return null;
-  }
-}
+import { isSameUint8Array, getPollIDFromURL } from './lib/helpers';
 
 function App() {
   const [polls, setPolls] = useState<ScrappedPoll[] | null>(null)
@@ -36,22 +27,41 @@ function App() {
   )
 }
 
+function findPollFromIdThrows(polls: ScrappedPoll[], pollID: Uint8Array): ScrappedPoll {
+  const poll = polls.find(poll => isSameUint8Array(poll.id, pollID));
+  if (poll) {
+    return poll;
+  } else {
+    throw new Error(`Poll with id ${pollID} not found`);
+  }
+}
 
 function SelectedPollController(props: {polls: ScrappedPoll[]}) {
   const {polls} = props;
-  const assumedMaoriSeatsURL = new URL(window.location.href).searchParams.get('assumed_maori_seats');
+  const searchParams = new URL(window.location.href).searchParams;
+  const assumedMaoriSeatsURL = searchParams.get('assumed_maori_seats');
   const [assumedMaoriSeats, setMaoriElectorateSeats] = useState<number>(assumedMaoriSeatsURL ? parseInt(assumedMaoriSeatsURL) : 3);
+  const pollIDURL = getPollIDFromURL(searchParams);
+  const [pollID, setPollID] = useState<Uint8Array>(pollIDURL || polls[0].id);
+  console.log(pollID);
+  console.log(polls);
+  const [selectedPoll, setSelectedPoll] = useState<ScrappedPoll>(findPollFromIdThrows(polls, pollID));
+
+  useEffect(() => {
+    setSelectedPoll(findPollFromIdThrows(polls, pollID));
+  }, [pollID, polls])
 
   useEffect(() => {
     let u = new URL(window.location.href);
     let params = new URLSearchParams(u.search);
     params.set('assumed_maori_seats', assumedMaoriSeats.toString());
+    params.set('poll_id', btoa(pollID.join(',')));
     u.search = params.toString();
     window.history.replaceState({}, '', u.toString());
-  }, [assumedMaoriSeats])
+  }, [pollID, assumedMaoriSeats])
 
   return (
-    <AppLoaded polls={polls} assumedMaoriSeats={assumedMaoriSeats} setMaoriElectorateSeats={setMaoriElectorateSeats}/>
+    <AppLoaded polls={polls} assumedMaoriSeats={assumedMaoriSeats} setMaoriElectorateSeats={setMaoriElectorateSeats} setPollID={setPollID} selectedPoll={selectedPoll}/>
   )
 }
 
@@ -97,11 +107,10 @@ function Header() {
   )
 }
 
-function AppLoaded(props: {polls: ScrappedPoll[], assumedMaoriSeats: number, setMaoriElectorateSeats: (value: number) => void}) {
-  const {polls, assumedMaoriSeats, setMaoriElectorateSeats} = props;
-  const [selectedPoll, setSelectedPoll] = useState<ScrappedPoll>(polls[0]);
+function AppLoaded(props: {polls: ScrappedPoll[], assumedMaoriSeats: number, setMaoriElectorateSeats: (value: number) => void, setPollID: (value: Uint8Array) => void, selectedPoll: ScrappedPoll}) {
+  const {polls, assumedMaoriSeats, setMaoriElectorateSeats, setPollID, selectedPoll} = props;
   const setSelectedPollHandler = (scrappedPoll: ScrappedPoll) => {
-    setSelectedPoll(scrappedPoll);
+    setPollID(scrappedPoll.id);
     }
   const setMaoriElectorateSeatsHandler = (value: number) => {
     setMaoriElectorateSeats(value);
