@@ -120,8 +120,7 @@ function Header(props: {selectedPoll: ScrappedPoll}) {
         >data</a>
       </span>
       </div>
-      <div>
-
+      <div className='share-icon'>
         <img src={shareIcon} alt="share" onClick={share}/>
       </div>
       </div>
