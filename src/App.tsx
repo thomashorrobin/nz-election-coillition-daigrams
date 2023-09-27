@@ -7,6 +7,7 @@ import SainteLagueResultsTable from './components/SainteLague';
 import VoteBar from './components/VoteBar';
 import { calculateSeats } from './lib/sainte-lague';
 import { isSameUint8Array, getPollIDFromURL } from './lib/helpers';
+import shareIcon from './share.svg';
 
 function App() {
   const [polls, setPolls] = useState<ScrappedPoll[] | null>(null)
@@ -19,12 +20,7 @@ function App() {
         setError(err.message);
     });
 }, [])
-  return (
-    <div className="App">
-      <Header/>
-      {polls ? <SelectedPollController polls={polls}/> : error ? <AppError error={error}/> : <AppLoading/>}
-    </div>
-  )
+  return polls ? <SelectedPollController polls={polls}/> : error ? <AppError error={error}/> : <AppLoading/>
 }
 
 function findPollFromIdThrows(polls: ScrappedPoll[], pollID: Uint8Array): ScrappedPoll {
@@ -61,7 +57,10 @@ function SelectedPollController(props: {polls: ScrappedPoll[]}) {
   }, [pollID, assumedMaoriSeats])
 
   return (
-    <AppLoaded polls={polls} assumedMaoriSeats={assumedMaoriSeats} setMaoriElectorateSeats={setMaoriElectorateSeats} setPollID={setPollID} selectedPoll={selectedPoll}/>
+    <div className="App">
+      <Header selectedPoll={selectedPoll}/>
+      <AppLoaded polls={polls} assumedMaoriSeats={assumedMaoriSeats} setMaoriElectorateSeats={setMaoriElectorateSeats} setPollID={setPollID} selectedPoll={selectedPoll}/>
+    </div>
   )
 }
 
@@ -82,9 +81,26 @@ function AppLoading() {
   )
 }
 
-function Header() {
+function Header(props: {selectedPoll: ScrappedPoll}) {
+  const {selectedPoll} = props;
+  function share() {
+    const shareData = {
+    title: "NZ Election 2023",
+    text: `${selectedPoll.company} (${selectedPoll.date})`,
+    url: window.location.href,
+  };
+  navigator.share(shareData).then(() => {
+    console.log("MDN shared successfully");
+  }
+  ).catch((err) => {
+    console.log(`Error: ${err}`);
+  });
+}
   return (
     <header className="App-header">
+      <div className='App-header-centre'>
+      <div></div>
+      <div>
       <p>
         Coalition Combinations
       </p>
@@ -103,6 +119,12 @@ function Header() {
           rel="noopener noreferrer"
         >data</a>
       </span>
+      </div>
+      <div>
+
+        <img src={shareIcon} alt="share" onClick={share}/>
+      </div>
+      </div>
     </header>
   )
 }

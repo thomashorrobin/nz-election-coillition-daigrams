@@ -25,6 +25,24 @@
   color: white;
 }
 
+.App-header-centre {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 50%;
+}
+
+@media screen and (max-width: 768px) {
+  .App-header-centre {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 95%;
+  }
+}
+
 .App-link {
   color: #61dafb;
 }
@@ -44,4 +62,8 @@ main {
   flex-wrap: wrap;
   justify-content: center;
   width: 100%;
+}
+
+.App-loading {
+  margin: auto;
 }

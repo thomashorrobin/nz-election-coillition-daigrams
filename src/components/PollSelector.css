@@ -23,10 +23,11 @@
 
 .maori-electorate-seat-layout label {
     padding-right: 2.5rem;
+    font-size: 1.25em;
 }
 
 .maori-electorate-seat-layout input[type=number] {
-    width: 3em;
+    width: 5em;
     border-radius: 0.25em;
     border: 1px solid #ccc;
     padding: 0.25em;
