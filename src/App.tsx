@@ -85,14 +85,10 @@ function Header(props: {selectedPoll: ScrappedPoll}) {
   const {selectedPoll} = props;
   function share() {
     const shareData = {
-    title: "NZ Election 2023",
-    text: `${selectedPoll.company} (${selectedPoll.date})`,
+    title: `${selectedPoll.company} (${selectedPoll.date})`,
     url: window.location.href,
   };
-  navigator.share(shareData).then(() => {
-    console.log("MDN shared successfully");
-  }
-  ).catch((err) => {
+  navigator.share(shareData).catch((err) => {
     console.log(`Error: ${err}`);
   });
 }
