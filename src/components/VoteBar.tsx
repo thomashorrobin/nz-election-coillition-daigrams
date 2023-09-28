@@ -42,7 +42,7 @@ function VoteBar(props:{results: Map<string, number>, seatsToWin: number}): JSX.
     });
     const totalSeats = addSeats(results);
     return (
-        <div className="vote-bar">
+        <div className="vote-bar border-4">
             <div className='vote-bar-items'>
                 {voteBarItems}
             </div>
@@ -55,7 +55,7 @@ function WinstonKingmaker(props:{seats: number, winstonKingmaker: boolean}): JSX
     const {seats, winstonKingmaker} = props;
     if (seats > 0) {
         return (
-            <div className="winston-kingmaker">
+            <div className="winston-kingmaker border-4">
                 <img src="logos/nz-first-logo-june-2017.jpg" alt="NZ First" />
                 <div className='vote-bar-total'><span>{seats}</span>{winstonKingmaker && <span className='winston-crown'>👑</span>}</div>
             </div>
