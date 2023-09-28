@@ -89,7 +89,7 @@ function VoteBarContainer(props:{results: Map<string, number>}): JSX.Element {
     leftWingCoilition.set('Maori Party', results.get('Maori Party') || 0);
     // leftWingCoilition.set('NZ First', results.get('NZ First') || 0);
     return (
-        <div className='vote-bar-container'>
+        <div className='vote-bar-container text-center'>
             <VoteBar results={rightWingCoilition} seatsToWin={seatsToWin}/>
             <WinstonKingmaker seats={results.get('NZ First') || 0} winstonKingmaker={winstonKingmaker}/>
             <VoteBar results={leftWingCoilition} seatsToWin={seatsToWin}/>

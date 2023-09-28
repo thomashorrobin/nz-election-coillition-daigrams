@@ -57,7 +57,7 @@ function SelectedPollController(props: {polls: ScrappedPoll[]}) {
   }, [pollID, assumedMaoriSeats])
 
   return (
-    <div className="App">
+    <div className="pb-5.0">
       <Header selectedPoll={selectedPoll}/>
       <AppLoaded polls={polls} assumedMaoriSeats={assumedMaoriSeats} setMaoriElectorateSeats={setMaoriElectorateSeats} setPollID={setPollID} selectedPoll={selectedPoll}/>
     </div>
