@@ -44,11 +44,11 @@ function findPollFromIdDefaults(polls: ScrappedPoll[], pollID: Uint8Array): Scra
 function assumedMaoriSeatsURLOrDefault(searchParams: URLSearchParams): number {
   const assumedMaoriSeatsURL = searchParams.get('assumed_maori_seats');
   if (!assumedMaoriSeatsURL) {
-    return 3;
+    return 1;
   }
   const assumedMaoriSeats = parseInt(assumedMaoriSeatsURL);
   if (isNaN(assumedMaoriSeats)) {
-    return 3;
+    return 1;
   }
   return assumedMaoriSeats;
 }

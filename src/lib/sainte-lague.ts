@@ -8,6 +8,9 @@ export function calculateSeats(poll: ScrappedPoll, assumedMaoriSeats: number): M
     if ((poll.reportedPercentage.get("NZ First") ?? 0) < 5) {
         poll.results.set("NZ First", 0);
     }
+    if (assumedMaoriSeats === 0) {
+        poll.results.set("Maori Party", 0);
+    }
     poll.results.forEach((value, key) => {
         // @ts-ignore
         sainteLagueObject[key] = value;
