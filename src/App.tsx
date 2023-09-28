@@ -32,16 +32,36 @@ function findPollFromIdThrows(polls: ScrappedPoll[], pollID: Uint8Array): Scrapp
   }
 }
 
+function findPollFromIdDefaults(polls: ScrappedPoll[], pollID: Uint8Array): ScrappedPoll {
+  const poll = polls.find(poll => isSameUint8Array(poll.id, pollID));
+  if (poll) {
+    return poll;
+  } else {
+    return polls[0];
+  }
+}
+
+function assumedMaoriSeatsURLOrDefault(searchParams: URLSearchParams): number {
+  const assumedMaoriSeatsURL = searchParams.get('assumed_maori_seats');
+  if (!assumedMaoriSeatsURL) {
+    return 3;
+  }
+  const assumedMaoriSeats = parseInt(assumedMaoriSeatsURL);
+  if (isNaN(assumedMaoriSeats)) {
+    return 3;
+  }
+  return assumedMaoriSeats;
+}
+
 function SelectedPollController(props: {polls: ScrappedPoll[]}) {
   const {polls} = props;
   const searchParams = new URL(window.location.href).searchParams;
-  const assumedMaoriSeatsURL = searchParams.get('assumed_maori_seats');
-  const [assumedMaoriSeats, setMaoriElectorateSeats] = useState<number>(assumedMaoriSeatsURL ? parseInt(assumedMaoriSeatsURL) : 3);
+  const [assumedMaoriSeats, setMaoriElectorateSeats] = useState<number>(assumedMaoriSeatsURLOrDefault(searchParams));
   const pollIDURL = getPollIDFromURL(searchParams);
   const [pollID, setPollID] = useState<Uint8Array>(pollIDURL || polls[0].id);
   console.log(pollID);
   console.log(polls);
-  const [selectedPoll, setSelectedPoll] = useState<ScrappedPoll>(findPollFromIdThrows(polls, pollID));
+  const [selectedPoll, setSelectedPoll] = useState<ScrappedPoll>(findPollFromIdDefaults(polls, pollID));
 
   useEffect(() => {
     setSelectedPoll(findPollFromIdThrows(polls, pollID));
@@ -95,7 +115,7 @@ function Header(props: {selectedPoll: ScrappedPoll}) {
   return (
     <header className="App-header">
       <div className='App-header-centre'>
-      <div></div>
+      <div className='share-icon'></div>
       <div>
       <p>
         Coalition Combinations
